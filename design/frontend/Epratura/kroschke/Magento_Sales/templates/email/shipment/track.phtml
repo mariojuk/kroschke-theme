@@ -1,0 +1,28 @@
+<?php
+/**
+ * @var $_shipment \Magento\Sales\Model\Order\Shipment
+ * @var $_item \Kroschke\Sap\Model\Order\Shipment\Track
+ */
+?>
+<?php $_shipment = $block->getShipment() ?>
+<?php $_order = $block->getOrder() ?>
+<?php if ($_shipment && $_order && $_shipment->getAllTracks()): ?>
+    <br/>
+    <table class="shipment-track">
+        <thead>
+        <tr>
+            <th><?= /* @escapeNotVerified */
+                __('Tracking Number') ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($_shipment->getAllTracks() as $_item): ?>
+            <tr>
+                <td>
+                    <a href="<?= $_item->getLink() ?>">< span><?= $block->escapeHtml($_item->getNumber()) ?></span></a>
+                </td>
+            </tr>
+        <?php endforeach ?>
+        </tbody>
+    </table>
+<?php endif; ?>

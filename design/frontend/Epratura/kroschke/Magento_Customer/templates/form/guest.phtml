@@ -1,0 +1,27 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Customer\Block\Form\Register $block */
+?>
+
+<br>
+<div class="login-toggler">
+    <div class="field custom">
+        <input id="guest-check" class="guest-check" name="login" type="radio"/>
+        <label data-content="#login-2" class="label" for="guest-check">
+            <b>Als Gast bestellen</b>
+            <br><p>Durch Ihre Bestellung als Gast werden Ihre Daten nicht gespeichert und Sie erhalten kein eigenes Konto.<br>
+                Bei einer erneuten Bestellung müssen Sie jedoch alle Daten erneut eingeben.</p>
+        </label>
+    </div>
+    <div id="login-2" class="guest-login toggle-content">
+        <a href="<?= $block->escapeUrl($block->getBaseUrl()) ?>checkout" class="action submit primary weiter" title="<?= $block->escapeHtmlAttr(__('weiter')) ?>"><span><?= $block->escapeHtml(__('weiter')) ?></span></a>
+    </div>
+</div>
+<br>
+<div class="line"></div>

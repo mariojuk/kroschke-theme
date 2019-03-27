@@ -1,0 +1,25 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!-- ko if: (visible()) -->
+<!-- ko text: address().prefix --><!-- /ko --> <!-- ko text: address().firstname --><!-- /ko --> <!-- ko text: address().middlename --><!-- /ko -->
+<!-- ko text: address().lastname --><!-- /ko --> <!-- ko text: address().suffix --><!-- /ko --><br/>
+<!-- ko text: _.values(address().street).join(", ") --><!-- /ko --><br/>
+<!-- ko text: address().city --><!-- /ko -->, <span data-bind="html: address().region"></span> <!-- ko text: address().postcode --><!-- /ko --><br/>
+<!-- ko text: getCountryName(address().countryId) --><!-- /ko --><br/>
+<!-- ko if: (address().telephone) -->
+<a data-bind="text: address().telephone, attr: {'href': 'tel:' + address().telephone}"></a>
+<!-- /ko --><br/>
+<if args="address().customAttributes && address().customAttributes.postnumber">
+    <span data-bind="i18n: 'Postnummer'"></span>:
+    <span data-bind="text: address().customAttributes.postnumber"></span>
+</if>
+<if args="address().customAttributes && address().customAttributes.packstation_number">
+    <br/>
+    <span data-bind="i18n: 'Packstationsnummer'"></span>:
+    <span data-bind="text: address().customAttributes.packstation_number"></span>
+</if>
+<!-- /ko -->

@@ -1,0 +1,60 @@
+//
+//  Typography
+//  _____________________________________________
+
+.lib-font-face-custom(
+  @family-name,
+  @font-display,
+  @font-path,
+  @font-weight: normal,
+  @font-style: normal
+) {
+  @font-face {
+    font-family: @family-name;
+    font-display: @font-display;
+    src: url('@{font-path}.eot');
+    src: url('@{font-path}.eot?#iefix') format('embedded-opentype'),
+    url('@{font-path}.woff2') format('woff2'),
+    url('@{font-path}.woff') format('woff'),
+    url('@{font-path}.ttf') format('truetype'),
+    url('@{font-path}.svg#@{family-name}') format('svg');
+    font-weight: @font-weight;
+    font-style: @font-style;
+  }
+}
+
+// Custom fonts
+
+.lib-font-face-custom(
+  @family-name: @font-family__futura__lite,
+  @font-display: swap,
+  @font-path: '@{baseDir}fonts/Futura/lite/Futura-Light',
+  @font-weight: normal,
+  @font-style: normal
+);
+
+.lib-font-face-custom(
+  @family-name: @font-family__futura__med,
+  @font-display: swap,
+  @font-path: '@{baseDir}fonts/Futura/med/Futura',
+  @font-weight: normal,
+  @font-style: normal
+);
+
+.lib-font-face-custom(
+  @family-name: @font-family__futura__bold,
+  @font-display: swap,
+  @font-path: '@{baseDir}fonts/Futura/bold/Futura-Bold',
+  @font-weight: normal,
+  @font-style: normal
+);
+
+.lib-font-face-custom(
+    @family-name: @font-family__fontello,
+    @font-display: block,
+    @font-path: '@{baseDir}fonts/Fontello/fontello',
+    @font-weight: normal,
+    @font-style: normal
+);
+
+

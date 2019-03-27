@@ -1,0 +1,43 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Cookie\Block\Html\Notices $block */
+?>
+<?php if ($this->helper(\Magento\Cookie\Helper\Cookie::class)->isCookieRestrictionModeEnabled()): ?>
+    <div role="alertdialog"
+         tabindex="-1"
+         class="message global cookie"
+         id="notice-cookie-block"
+         style="display: none;">
+        <div role="document" class="content" tabindex="0">
+            <p>
+                <span><?= $block->escapeHtml(__('Wir verwenden Cookies für statistische Zwecke und um Ihre Erlebnisse auf dieser Website zu verbessern.')) ?></span>
+                <span><?= $block->escapeHtml(__('Durch die weitere Nutzung dieser Webseite, erklären Sie sich mit der Verwendung von Cookies einverstanden. Weitere Informationen über Cookies und wie Sie der Verwendung von Cookies widersprechen können, finden Sie in unserer ')) ?></span>
+                <?= $block->escapeHtml(__('<a href="%1">Datenschutzerklärung</a>.', $block->getUrl('datenschutz')), ['a']) ?>
+            </p>
+            <div class="actions">
+                <button id="btn-cookie-allow" class="action allow primary">
+                    <span><?= $block->escapeHtml(__('OK')) ?></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "#notice-cookie-block": {
+                "cookieNotices": {
+                    "cookieAllowButtonSelector": "#btn-cookie-allow",
+                    "cookieName": "<?= /* @noEscape */ \Magento\Cookie\Helper\Cookie::IS_USER_ALLOWED_SAVE_COOKIE ?>",
+                    "cookieValue": <?= /* @noEscape */ $this->helper(\Magento\Cookie\Helper\Cookie::class)->getAcceptedSaveCookiesWebsiteIds() ?>,
+                    "cookieLifetime": <?= /* @noEscape */ $this->helper(\Magento\Cookie\Helper\Cookie::class)->getCookieRestrictionLifetime() ?>,
+                    "noCookiesUrl": "<?= $block->escapeJs($block->escapeUrl($block->getUrl('cookie/index/noCookies'))) ?>"
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

@@ -1,0 +1,39 @@
+<?php
+/**
+ * @var $block \Magento\Customer\Block\Account\Customer
+ */
+?>
+<script>
+    require(['jquery'], function ($) {
+        $('#login-link').click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $('.dropdown-login').slideToggle();
+            var $cart = $('.block-minicart');
+            if($cart.is(":visible")) {
+                $cart.slideUp();
+            }
+        });
+        $('.showcart').on('click', function() {
+            $('.block-minicart').slideDown();
+            var $drop = $('.dropdown-login');
+            if($drop.is(":visible")) {
+                $drop.slideUp();
+            }
+        });
+        $(document).click(function(e) {
+            var $drop = $('.dropdown-login');
+            if ( $(e.target).closest($drop).length === 0 ) {
+                $drop.slideUp();
+            }
+        });
+    })
+</script>
+
+<?php if(!$block->customerLoggedIn()): ?>
+    <a href="#" id="login-link" class="header-login"><?php  echo __('ANMELDEN') ?></a>
+    <?php echo $block->getChildHtml('header.header-login') ?>
+<?php else: ?>
+    <a href="#" id="login-link" class="header-login"><?php  echo __('ACCOUNT') ?></a>
+    <?php echo $block->getChildHtml('header.account.links.signed') ?>
+<?php  endif; ?>

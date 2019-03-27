@@ -1,0 +1,13 @@
+<?php /****
+ * @var $block Magento\Framework\View\Element\Template */?>
+
+<script>
+    require(['jquery'], function ($) {
+        $(document).ready(function () {
+            var $backButton =  '<a class="back-button" href="javascript: history.go(-1)"><span>zurück</span></a>';
+            var $breadcrumbsInfo = '<div class="breadcrumbs-info"> <div class="breadcrumbs-phone"><span class="icon-content">04102 804 5045</span></div><div class="breadcrumbs-email"><a href="mailto:kundenservice@kroschke.de" target="_top" title="Kroschke" class="icon-content">kundenservice@kroschke.de</a></div></div>';
+            jQuery($backButton).prependTo('.catalog-product-view .page-main');
+            jQuery($breadcrumbsInfo).insertAfter('.catalog-product-view .breadcrumbs');
+        });
+    });
+</script>

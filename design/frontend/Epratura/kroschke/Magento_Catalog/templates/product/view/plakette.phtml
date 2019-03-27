@@ -1,0 +1,170 @@
+<?php
+/**
+ * @var $block Kroschke\Kennzeichen\Block\Product\KennZeichen
+ */
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$_product = $block->getProduct();
+
+if (!$block->checkPlaketteAttributSet($_product->getAttributeSetId())) {
+    return;
+}
+?>
+<div class="plakette-license-input">
+    <div class="product-licence-input" id="license_plate_configurator">
+        <div class="product-licence-input-wrapper">
+            <div class="input-fields">
+                <form action="#">
+                    <div class="fields">
+                        <img src="<?php echo $block->getViewFileUrl('images/licence_plate_eu.jpg'); ?>" alt="">
+                        <input type="text" class="license_input text_input" id="license_input_first" data-max="3">
+                        <input type="text" class="license_input text_input" data-max="2">
+                        <input type="number" class="license_input number_input" data-max="4">
+                    </div>
+                    <div class="plakette-buttons">
+                        <button class="plakette_file_button" id="plakette_file_button"
+                                style="display: none;"><?= __(
+                                'Fahrzeugschein bitte hier hochladen (.jpg, .png)'
+                            ) ?></button>
+                        <button class="plakette_file_button"
+                                id="plakette_file_button_remove">
+                            <!--                            <span id="upload-loader"></span>-->
+                            <span id="upload-remove"><?= __('Upload successful - remove file') ?></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    require([
+        'jquery',
+        'underscore',
+        'mage/translate',
+        'Magento_Ui/js/modal/alert',
+        'mage/validation'], function ($, _, $t, alerta) {
+
+        // Added endsWith prototype function
+        if (!String.prototype.endsWith) {
+            String.prototype.endsWith = function(searchString, position) {
+              var subjectString = this.toString();
+              if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
+                position = subjectString.length;
+              }
+              position -= searchString.length;
+              var lastIndex = subjectString.lastIndexOf(searchString, position);
+              return lastIndex !== -1 && lastIndex === position;
+            };
+        }
+
+        var $configurator = $('#license_plate_configurator'),
+            $custom_options = $('.product-custom-option.license_plate'),
+            $file_input = {};
+
+        $('#product-addtocart-button ').attr('disabled', true);
+
+        $custom_options.each(function (e) {
+            $input = $(this);
+            if ($input.data('plate') == 'plate_file') {
+                $file_input = $input;
+            }
+        });
+
+        $file_input.mage('validation', {});
+
+        $file_input.change(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var files = this.files; //FileList object
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                if( !file.name.toLowerCase().endsWith('jpg') && !file.name.toLowerCase().endsWith('jpeg') && !file.name.toLowerCase().endsWith('png')){
+                    // Changed condition matching
+                    // }
+                    // if (!file.type.match('image.*')) {
+                    alerta({
+                        title: $t('falscher Dateityp'),
+                        content: $t('Sie können nur Dateien mit den Formaten .jpg, .png, hochladen.'),
+                        actions: {
+                            always: function () {}
+                        }
+                    });
+                    $(this).val("");
+                    return false;
+                }
+            }
+
+            toggleFileButtons();
+            updateAddToCart();
+        });
+
+        $configurator.find('.license_input').keyup(_.debounce(function (e) {
+            var text = '';
+
+            $('.license_input').each(function (index, input) {
+                if (input.value) {
+                    text += input.value.toUpperCase() + '-';
+                }
+            });
+            text = text.slice(0, -1);
+
+            $custom_options.each(function (e) {
+                $input = $(this);
+
+                if ($input.data('plate') == 'plate_kennzeichen') {
+                    $input.val(text);
+                }
+            });
+
+            updateAddToCart();
+        }));
+
+        //FILE buttons
+        $configurator.find('#plakette_file_button').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            $file_input.click();
+        });
+        $configurator.find('#plakette_file_button_remove').click(function (e) {
+            $file_input.val('');
+
+            toggleFileButtons();
+            updateAddToCart();
+        });
+
+        function updateAddToCart() {
+            if (validateInputs()) {
+                $('#product-addtocart-button').attr('disabled', false);
+            } else {
+                $('#product-addtocart-button').attr('disabled', true);
+            }
+        }
+
+        function validateInputs() {
+            var number_of_texts = 0,
+                valid = false;
+
+            $('.license_input').each(function (index, input) {
+                if (input.value) {
+                    number_of_texts++;
+                }
+            });
+
+            if (number_of_texts > 2) {
+                valid = true;
+            }
+            if (valid) {
+                valid = $file_input.validation('isValid');
+            }
+
+            return valid;
+        }
+
+        function toggleFileButtons() {
+            $('.plakette_file_button').toggle();
+        }
+    });
+</script>

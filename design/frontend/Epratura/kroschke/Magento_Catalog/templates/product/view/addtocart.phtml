@@ -1,0 +1,73 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php
+$_product = $block->getProduct();
+$_helper = $this->helper('Kroschke\Kennzeichen\Helper\Data');
+
+$isPlate = (int)$_product->getAttributeText(\Kroschke\Kennzeichen\Setup\UpgradeData::MIN_QTY_CODE) > 1;
+?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()): ?>
+    <div class="box-tocart">
+        <div class="fieldset">
+            <?php if ($block->shouldRenderQuantity()): ?>
+                <div class="field qty">
+                    <label class="label" for="qty"><span><?= /* @escapeNotVerified */ __('Qty') ?></span></label>
+                    <div class="control">
+                        <input type="number"
+                               name="qty"
+                               id="qty"
+                               value="<?= $isPlate
+                                   ? $_product->getAttributeText(\Kroschke\Kennzeichen\Setup\UpgradeData::MIN_QTY_CODE)
+                                   : ($block->getProductDefaultQty() * 1)
+                               ?>"
+                               <?php if($isPlate): ?>
+                               min="<?= $_product->getAttributeText(\Kroschke\Kennzeichen\Setup\UpgradeData::MIN_QTY_CODE) ?>"
+                               step="<?= $_product->getAttributeText(\Kroschke\Kennzeichen\Setup\UpgradeData::MIN_QTY_CODE) ?>"
+                               <?php endif; ?>
+                               title="<?= /* @escapeNotVerified */ __('Qty') ?>"
+                               class="input-text qty"
+                               data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                        />
+                    </div>
+                </div>
+            <?php endif; ?>
+            <div class="actions">
+                <button type="submit"
+                        title="<?= /* @escapeNotVerified */ $buttonTitle ?>"
+                        class="action secondary tocart"
+                        id="product-addtocart-button">
+                    <span><?= /* @escapeNotVerified */ $buttonTitle ?></span>
+                </button>
+                <?= $block->getChildHtml('', true) ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if ($block->isRedirectToCartEnabled()) : ?>
+    <script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+<?php else : ?>
+    <script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>
+<?php endif; ?>

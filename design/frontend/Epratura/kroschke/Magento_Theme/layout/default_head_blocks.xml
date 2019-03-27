@@ -1,0 +1,10 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+        <meta name="google-site-verification" content="sqGNAY0Fp_tpXhvDy_PzcpyWKZbANDvQc4kgsRj-lag" />
+        <!-- Fontello -->
+        <script src="js/lib/lazysizes.min.js" async="true"/>
+        <script src="js/main.js" async="true" />
+    </head>
+</page>

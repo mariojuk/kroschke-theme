@@ -1,0 +1,77 @@
+//
+// Common
+// ___________________________________
+& when (@media-common = true) {
+	.cms-page-view {
+		.page-main {
+			.policy-container {
+				.column-gap(50px);
+				font-family: @font-family__futura__lite, 'Open Sans', sans-serif;
+			}
+			.kroschke-main-line {
+				border-bottom: solid 3px #004b78;
+				margin: 0 0 30px 0;
+				line-height: 30px;
+			}
+			a {
+				font-family: @font-family__futura__med, 'Open Sans', sans-serif;
+				color: @lightblue2;
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+//
+// Mobile
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) { // max 767 px
+	.cms-page-view {
+		.page-main {
+			.policy-container {
+				.column-count(1);
+			}
+		}
+	}
+}
+
+//
+// Desktop
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+	.cms-page-view {
+		.page-main {
+			.policy-container {
+				.column-count(2);
+			}
+		}
+	}
+}
+
+//
+// Tablet
+// ___________________________________
+.media-width(@minBreak, @maxBreak) when (@minBreak = @screen__m) and (@maxBreak = @screen__l) {
+	.cms-page-view {
+		.page-main {
+
+			.kroschke-main-line{
+				margin-left:10px; 
+			}
+
+			.datenschutz-wrapper {
+				.kroschke-title-text {
+					width: 90%;
+				}
+				h4, h3 {
+					margin-left: 10px;
+				}
+				.policy-container {
+					.column-count(2);
+					margin: 0 10px;
+				}
+			}
+		}
+	}
+}
+

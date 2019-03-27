@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 300 300" style="enable-background:new 0 0 300 300;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;}
+	.st1{display:inline;fill:#828282;}
+	.st2{fill:none;}
+	.st3{fill:#FFFFFF;}
+</style>
+<g id="Ebene_1" class="st0">
+	<rect x="-69" y="-10" class="st1" width="392" height="312"/>
+</g>
+<g id="Ebene_2" class="st0">
+	
+		<image style="display:inline;overflow:visible;" width="95" height="67" xlink:href="icon-truck.png"  transform="matrix(3.0314 0 0 3.0314 5 52)">
+	</image>
+</g>
+<g id="Ebene_3">
+	<circle class="st2" cx="90" cy="229" r="26"/>
+	<circle class="st2" cx="90" cy="229" r="13"/>
+	<g>
+		<path class="st3" d="M16.5,190.5h145v-131c0,0,0.5-2.5-1-4s-5-3-5-3h-132c0,0-2,0-5,3s-2,10-2,10V190.5z"/>
+		<path class="st3" d="M90,204c-13.8,0-25,11.2-25,25s11.2,25,25,25s25-11.2,25-25S103.8,204,90,204z M90,242c-7.2,0-13-5.8-13-13
+			s5.8-13,13-13s13,5.8,13,13S97.2,242,90,242z"/>
+		<path class="st3" d="M222,204c-13.8,0-25,11.2-25,25s11.2,25,25,25s25-11.2,25-25S235.8,204,222,204z M222,242
+			c-7.2,0-13-5.8-13-13s5.8-13,13-13s13,5.8,13,13S229.2,242,222,242z"/>
+		<g>
+			<path class="st3" d="M291.5,203.5h-13v-65l-49-62h-49c0,0-2.5,0.5-5,3S173,85,173,85v120h-58.9c4.8,4.8,8.1,11,9.4,18h65.1
+				c2.8-15.9,16.7-28,33.5-28s30.6,12.1,33.5,28H292L291.5,203.5z M253.5,136.5h-60l1-36h36l23,29V136.5z"/>
+			<path class="st3" d="M7,223h49.5c1.2-7,4.6-13.2,9.4-18H7V223z"/>
+		</g>
+	</g>
+</g>
+</svg>

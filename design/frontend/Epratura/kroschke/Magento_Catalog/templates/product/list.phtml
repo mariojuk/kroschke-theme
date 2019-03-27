@@ -1,0 +1,239 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+<?php
+$_productCollection = $block->getLoadedProductCollection();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$license_helper = $this->helper('\Kroschke\Kennzeichen\Helper\Data');
+?>
+<?php if (!$_productCollection->count()): ?>
+    <div class="message info empty">
+        <div><?= /* @escapeNotVerified */
+            __('We can\'t find products matching the selection.') ?></div>
+    </div>
+<?php else: ?>
+    <?= $block->getToolbarHtml() ?>
+    <?= $block->getAdditionalHtml() ?>
+    <?php
+    if ($block->getMode() == 'grid') {
+        $viewMode = 'grid';
+        $image = 'category_page_grid';
+        $showDescription = false;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    } else {
+        $viewMode = 'list';
+        $image = 'category_page_list';
+        $showDescription = true;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+    }
+    /**
+     * Position for actions regarding image size changing in vde if needed
+     */
+    $pos = $block->getPositioned();
+    ?>
+    <div class="products wrapper <?= /* @escapeNotVerified */
+    $viewMode ?> products-<?= /* @escapeNotVerified */
+    $viewMode ?>">
+        <?php $iterator = 1; ?>
+        <ol id="products" class="products list items product-items">
+            <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+            <?php foreach ($_productCollection as $_product): ?>
+                <?= /* @escapeNotVerified */
+                ($iterator++ == 1) ? '<li class="item product product-item">' : '</li><li class="item product product-item">' ?>
+                <div class="product-item-info" data-container="product-grid">
+
+                    <?php
+                    $productImage = $block->getImage($_product, $image);
+                    if ($pos != null) {
+                        $position = ' style="left:' . $productImage->getWidth() . 'px;'
+                            . 'top:' . $productImage->getHeight() . 'px;"';
+                    }
+                    ini_set('display_errors', 1);
+
+                    $showCartButton = $license_helper->notConfigurableProduct($_product);
+                    ?>
+
+                    <strong class="product name product-item-name">
+                        <a class="product-item-link"
+                           href="<?= /* @escapeNotVerified */
+                           $_product->getProductUrl() ?>">
+                            <?= /* @escapeNotVerified */
+                            $_helper->productAttribute($_product, $_product->getName(), 'name') ?>
+                        </a>
+                    </strong>
+
+                    <?php // Product Image ?>
+                    <a href="<?= /* @escapeNotVerified */
+                    $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
+                        <div class="image-wrapper">
+                            <?= $productImage->toHtml() ?>
+
+                            <?php if ($_product->getData('sticker')): ?>
+                                <span class="product-image-sticker">
+                                    <span>NEU</span>
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                    </a>
+
+                    <div class="product details product-item-details">
+
+                        <?php
+                        $_productNameStripped = $block->stripTags($_product->getName(), null, true);
+                        ?>
+
+                        <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
+                        <?= /* @escapeNotVerified */
+                        $block->getProductPrice($_product) ?>
+                        <?= $block->getProductDetailsHtml($_product) ?>
+
+                        <div class="product-info">
+                            <p>pro Stück</p>
+                            <p>inkl. 19 % MwSt</p>
+                            <p>zzgl. <a class="productInfo-modal">Versandkosten</a></p>
+                        </div>
+
+                        <div class="product-item-inner">
+                            <div class="product actions product-item-actions"<?= strpos($pos, $viewMode . '-actions') ? $position : '' ?>>
+                                <div class="actions-primary"<?= strpos($pos, $viewMode . '-primary') ? $position : '' ?>>
+                                    <?php if ($showCartButton): ?>
+
+                                        <a class="action primary details-btn" href="<?php echo $_product->getProductUrl() ?>"><span><?= /* @escapeNotVerified */
+                                                __('Details') ?></span></a>
+                                        <?php if ($_product->isSaleable()): ?>
+                                            <?php $postParams = $block->getAddToCartPostParams($_product); ?>
+                                            <form data-role="tocart-form"
+                                                  data-product-sku="<?= $block->escapeHtml($_product->getSku()) ?>"
+                                                  action="<?= /* @NoEscape */
+                                                  $postParams['action'] ?>" method="post">
+                                                <input type="hidden" name="product" value="<?= /* @escapeNotVerified */
+                                                $postParams['data']['product'] ?>">
+                                                <input type="hidden" name="<?= /* @escapeNotVerified */
+                                                Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @escapeNotVerified */
+                                                $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+                                                <?= $block->getBlockHtml('formkey') ?>
+                                                <button type="submit"
+                                                        title="<?= $block->escapeHtml(__('Add to Cart')) ?>"
+                                                        class="action add-to-cart">
+                                                    <span class="cart-icon"><?= /* @escapeNotVerified */
+                                                        __('Add to Cart') ?></span>
+                                                </button>
+                                            </form>
+                                        <?php else: ?>
+                                            <?php if ($_product->isAvailable()): ?>
+                                                <div class="stock available"><span><?= /* @escapeNotVerified */
+                                                        __('In stock') ?></span></div>
+                                            <?php else: ?>
+                                                <div class="stock unavailable"><span><?= /* @escapeNotVerified */
+                                                        __('Out of stock') ?></span></div>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+
+                                            <a class="action primary configure-btn" title="<?= $block->escapeHtml(__('Jetzt konfigurieren')) ?>" href="<?php echo $_product->getProductUrl() ?>"><?= /* @escapeNotVerified */
+                                                __('Jetzt konfigurieren') ?></a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <?php if ($showDescription): ?>
+                                <div class="product description product-item-description">
+                                    <?= /* @escapeNotVerified */
+                                    $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                                    <a href="<?= /* @escapeNotVerified */
+                                    $_product->getProductUrl() ?>" title="<?= /* @escapeNotVerified */
+                                    $_productNameStripped ?>"
+                                       class="action more"><?= /* @escapeNotVerified */
+                                        __('Learn More') ?></a>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                <?= ($iterator == count($_productCollection) + 1) ? '</li>' : '' ?>
+            <?php endforeach; ?>
+        </ol>
+        <div class="productInfo" style="display: none;">
+            <span class="info-title">Versandkosten und Laufzeiten</span>
+            <div class="info info-left">
+                <span class="info-description-title">
+                    Beim Versand von Kennzeichen und Zubehör können Sie zwischen verschiedenen
+                    Versandarten wählen:
+                </span>
+                <p>
+                    Die Versandkosten für den UPS Standard Paket-Versand betragen 4,60 €.
+                    Zudem können wir Ihnen Ihre Kfz-Kennzeichen und Zubehörartikel wie Kennzeichenhalter per UPS-Express für 14,95 € bis 12:00 Uhr und für 19,95 € bis 9:00 Uhr per DHL-Express zusenden. Der Versand von Feinstaubplaketten erfolgt als Deutsche Post Brief für 1,00 €.
+                </p>
+            </div>
+            <div class="info info-right">
+                <span class="info-description-title">
+                    Warum ist eine Bestellmenge von „2“ für Kfz-Kennzeichen voreingestellt?
+                </span>
+                <p>
+                    Die Erfahrung und letzten Endes auch die Logik zeigen, dass unsere Kunden generell davon ausgehen, bei einer Bestellung von Kfz-Kennzeichen auch wirklich zwei Nummernschilder - sowohl für Front als auch Heck - zu erhalten. Mit einer voreingestellten Bestellmenge von 2 Kfz-Kennzeichen möchten wir Sie davor bewahren, versehentlich nur ein Kennzeichen zu bestellen und eventuell ein zweites nachbestellen zu müssen. Dadurch sparen Sie sich unnötige Kosten und Zeitaufwände und wir können Ihnen genau das anbieten, wonach Sie suchen.
+                </p>
+                <p>
+                    Achtung: Es handelt sich hier nicht um eine Mindestbestellmenge. Selbstverständlich können Sie die Stückzahl auch heruntersetzen, wenn Sie nur ein Kennzeichen benötigen!
+                </p>
+            </div>
+        </div>
+    </div>
+    <?= $block->getToolbarHtml() ?>
+    <?php if (!$block->isRedirectToCartEnabled()) : ?>
+        <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {
+                    "product_sku": "<?= /* @NoEscape */
+            $_product->getSku() ?>"
+                }
+            }
+        }
+
+        </script>
+    <?php endif; ?>
+    <script>
+        require(
+            [
+                'jquery',
+                'Magento_Ui/js/modal/modal'
+            ],
+            function(
+                $,
+                modal
+            ) {
+                var productInfo = {
+                    type: 'popup',
+                    responsive: true,
+                    innerScroll: true,
+                    modalClass: 'productInfo-modal',
+                    buttons: [{
+                        click: function () {
+                            this.closeModal();
+                        }
+                    }]
+                };
+
+                $(".productInfo-modal").click(function() {
+
+                    $(".productInfo").modal(productInfo).modal('openModal');
+
+                });
+            }
+        );
+    </script>
+<?php endif; ?>

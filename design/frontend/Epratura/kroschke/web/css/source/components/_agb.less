@@ -1,0 +1,66 @@
+//
+// Common
+// ___________________________________
+& when (@media-common = true) {
+    .page-main {
+
+    	.agb-container  {
+        	.column-gap(50px);
+   		}
+
+		.kroschke-main-line{
+			border-bottom: solid 3px #004b78;
+			margin: 0 0 30px 0;
+			line-height: 30px;
+		}
+    }
+
+	.form-create-account {
+		.field.required .label {
+			> span:after {
+				content: '*';
+				position: absolute;
+			}
+		}
+
+		.field {
+			button.action-show {
+				padding: 0 15px 7px 15px;
+			}
+		}
+	}
+}
+
+//
+// Mobile
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) { // max 767 px
+    .page-main {
+    	.agb-container  {
+        	.column-count(1);
+   		}
+    }
+}
+
+//
+// Desktop
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .page-main {
+    	.agb-container  {
+        	.column-count(2);
+   		}
+    }
+}
+
+//
+// Tablet
+// ___________________________________
+.media-width(@minBreak, @maxBreak) when (@minBreak = @screen__m) and (@maxBreak = @screen__l) {
+    .page-main {
+        .agb-container {
+            .column-count(2);
+            margin:0 10px;
+        }
+    }
+}

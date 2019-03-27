@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+
+        <!--Remove elements - header-->
+        <referenceBlock name="register-link" remove="true"/>
+        <referenceBlock name="authorization-link" remove="true"/>
+        <referenceBlock name="wish-list-link" remove="true"/>
+        <referenceBlock name="my-account-link" remove="true"/>
+        <referenceBlock name="advanced-search-link" remove="true"/>
+
+        <referenceBlock name="header" remove="true"/>
+        <referenceBlock name="advanced-search-link" remove="true"/>
+
+        <referenceBlock name="view.addto.compare" remove="true"/>
+        <referenceBlock name="view.addto.wishlist" remove="true"/>
+
+        <referenceBlock name="catalog.leftnav" remove="true"/>
+
+        <referenceBlock name="top.links">
+            <block class="Magento\Cms\Block\Block" name="header-links">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">header-links</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+
+        <referenceContainer name="page.top">
+            <block class="Magento\Framework\View\Element\Template" name="navigation.sections" before="-" template="Magento_Theme::html/sections.phtml">
+                <arguments>
+                    <argument name="group_name" xsi:type="string">navigation-sections</argument>
+                    <argument name="group_css" xsi:type="string">nav-sections</argument>
+                </arguments>
+                <block class="Magento\Framework\View\Element\Template" name="store.menu" group="navigation-sections" template="Magento_Theme::html/container.phtml">
+                    <block class="Magento\Theme\Block\Html\Topmenu" name="catalog.topnav" template="Magento_Theme::html/topmenu.phtml" ttl="3600" before="-"/>
+                </block>
+                <block class="Magento\Framework\View\Element\Template" name="store.settings" group="navigation-sections" template="Magento_Theme::html/container.phtml">
+                    <arguments>
+                        <argument name="title" translate="true" xsi:type="string">Settings</argument>
+                    </arguments>
+                    <block class="Magento\Store\Block\Switcher" name="store.settings.language" template="Magento_Store::switch/languages.phtml">
+                        <arguments>
+                            <argument name="id_modifier" xsi:type="string">nav</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Directory\Block\Currency" name="store.settings.currency" template="Magento_Directory::currency.phtml">
+                        <arguments>
+                            <argument name="id_modifier" xsi:type="string">nav</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceContainer>
+
+        <referenceBlock name="header.panel">
+            <block class="Magento\Customer\Block\Account\Customer" name="header.account.links" before="top.links"
+                   template="Magento_Theme::html/header/account-links.phtml">
+
+                <block class="Epratura\Contact\Block\Login" name="header.header-login"
+                       template="Magento_Theme::html/header/account/header-login.phtml"/>
+                <block class="Magento\Framework\View\Element\Template" name="header.account.links.signed"
+                       template="Magento_Theme::html/header/account/signed.phtml"/>
+
+            </block>
+        </referenceBlock>
+
+        <move element="authorization-link" destination="header.account.links"/>
+
+        <!--Create header images certificate block-->
+        <referenceContainer name="header-wrapper">
+            <block class="Magento\Cms\Block\Block" name="header.certificates" after="logo">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">header-certificates</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <!--Move Advanced search to header links-->
+        <!--<move element="advanced-search-link" destination="header.panel" before="-"/>-->
+
+
+        <!--Move minicart to header links-->
+        <move element="minicart" destination="header.panel" before="-"/>
+        <move element="breadcrumbs" destination="main.content" before="-"/>
+
+
+        <!--Remove elements - footer-->
+        <referenceBlock name="footer_links" remove="true"/>
+        <referenceBlock name="report.bugs" remove="true"/>
+        <referenceBlock name="copyright" remove="true"/>
+        <referenceBlock name="form.subscribe" remove="true"/>
+
+        <!--Create footer blocks-->
+        <referenceContainer name="footer">
+            <container name="page_footer_container_top" htmlTag="div" htmlClass="page-footer-container-top">
+                <block class="Magento\Cms\Block\Block" name="page.footer.top.blocks1" after="-">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">page-footer-top</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Cms\Block\Block" name="page.footer.top.blocks2" after="-">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">page-footer-top-2</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Cms\Block\Block" name="page.footer.top.blocks3" after="-">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">page-footer-top-3</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Cms\Block\Block" name="page.footer.top.blocks4" after="-">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">page-footer-top-4</argument>
+                    </arguments>
+                </block>
+            </container>
+            <container name="page_footer_container_bottom" htmlTag="div" htmlClass="page-footer-container-bottom"
+                       after="-">
+                <container name="page_footer_links_wrapper" htmlTag="div" htmlClass="page-footer-links-wrapper"
+                           after="-">
+                    <block class="Magento\Cms\Block\Block" name="page.footer.bottom.links" after="-">
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">footer-bottom-links</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Cms\Block\Block" name="page.footer.bottom.links2" after="-">
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">footer-bottom-links-2</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Cms\Block\Block" name="page.footer.bottom.links3" after="-">
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">footer-bottom-links-3</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Cms\Block\Block" name="page.footer.bottom.links4" after="-">
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">footer-bottom-links-4</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Cms\Block\Block" name="page.footer.bottom.links5" after="-">
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">footer-bottom-links-5</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Cms\Block\Block" name="page.footer.bottom.links6" after="-">
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">footer-bottom-links-6</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Cms\Block\Block" name="page.footer.bottom.links7" after="-">
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">footer-bottom-links-7</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Cms\Block\Block" name="page.footer.bottom.links8" after="-">
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">footer-bottom-links-8</argument>
+                        </arguments>
+                    </block>
+                </container>
+
+                <block class="Magento\Framework\View\Element\Template" name="store-links-additional" template="Magento_Theme::js/links.phtml"/>
+            </container>
+        </referenceContainer>
+
+        <referenceContainer name="footer">
+            <block class="Magento\Framework\View\Element\Template" name="add-to-cart-popup" template="Magento_Catalog::product/add/popup.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

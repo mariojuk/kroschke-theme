@@ -1,0 +1,142 @@
+//
+// Common
+// ___________________________________
+& when (@media-common = true) {
+    .page-main {
+        .faq-wrapper {
+            .faq-container {
+                .lib-vendor-prefix-display(flex);
+                .flex-space-between();
+                width: 100%;
+
+                span b {
+                    padding-right: 25px;
+                    font-family: @font-family__futura__med;
+                }
+                .faq-container-line {
+                    width: 100%;
+                    border-top: 1px solid @pageline;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                }
+                div[aria-expanded="false"] {
+                    div[data-role="trigger"] {
+                        cursor: pointer;
+                        position: relative;
+                        &:after {
+                            position: absolute;
+                            right: 0;
+                            content: '\e822';
+                            font-family: 'fontello';
+                            line-height: 30px;
+                            font-size: 2.8rem;
+                            font-weight: 700;
+                        }
+                    }
+                }
+                div[aria-expanded="true"] {
+                    div[data-role="trigger"] {
+                        cursor: pointer;
+                        position: relative;
+                        &:after {
+                            position: absolute;
+                            right: 0;
+                            content: '\e821';
+                            font-family: 'fontello';
+                            line-height: 28px;
+                            font-size: 2.8rem;
+                            font-weight: 700;
+                        }
+                    }
+                }
+            }
+            .homepage-certificate {
+                position: fixed;
+                top:30%;
+                right: 0;
+                width: 54px;
+                height: 98px;
+                z-index: 3;
+            }
+        }
+    }
+}
+
+//
+// Mobile
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) { // max 767 px
+    .page-main {
+        .faq-wrapper {
+            .kroschke-title-text {
+                font-size: @category_banner_text_l;
+            }
+
+            .faq-container {
+                .lib-vendor-prefix-flex-direction(column);
+
+                .faq-container-left {
+                    width: 100%;
+                }
+
+                .faq-container-right {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+//
+// Desktop
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .page-main {
+        .faq-wrapper {
+            .faq-container {
+                .lib-vendor-prefix-flex-direction(row);
+                .flex-space-between();
+                width: 100%;
+
+                .faq-container-left {
+                    width: 48%;
+                }
+
+                .faq-container-right {
+                    width: 48%;
+                }
+            }
+        }
+    }
+}
+
+//
+// Tablet
+// ___________________________________
+.media-width(@minBreak, @maxBreak) when (@minBreak = @screen__m) and (@maxBreak = @screen__l) {
+    .page-main {
+        .faq-wrapper {
+            .kroschke-title-text{
+                margin-left:10px;
+                width:90%;
+            }
+            .kroschke-main-line{
+                margin-left:10px;
+            }
+            .faq-container {
+                .lib-vendor-prefix-display(flex);
+                .lib-vendor-prefix-flex-direction(row);
+                .flex-space-around();
+
+                .faq-container-left {
+                    width: 48%;
+                }
+
+                .faq-container-right {
+                    width: 48%;
+                }
+            }
+        }
+    }
+}
+

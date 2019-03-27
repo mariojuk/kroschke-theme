@@ -1,0 +1,13 @@
+<div class="dropdown-login" style="display:none;">
+    <div class="actions-toolbar">
+        <div class="primary">
+            <a class="action primary register"
+               href="<?= $block->escapeUrl($block->getBaseUrl()) ?>customer/account"><?php echo __('My Account') ?></a>
+        </div>
+        <div class="primary">
+            <a class="action primary register"
+               href="<?= $block->escapeUrl($block->getBaseUrl()) ?>customer/account/logout"><?php echo __('Logout') ?></a>
+        </div>
+    </div>
+    <?php echo $block->getChildHtml() ?>
+</div>

@@ -1,0 +1,80 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php foreach ($block->getChildHtmlList() as $_html): ?>
+    <?= /* @escapeNotVerified */ $_html ?>
+<?php endforeach; ?>
+<div class="productInfo" style="display: none;">
+    <span class="info-title">Versandkosten und Laufzeiten</span>
+    <div class="info info-left">
+        <span class="info-description-title">
+            Beim Versand von Kennzeichen und Zubehör können Sie zwischen verschiedenen
+            Versandarten wählen:
+        </span>
+        <p>
+            Die Versandkosten für den UPS Standard Paket-Versand betragen 4,60 €.
+            Zudem können wir Ihnen Ihre Kfz-Kennzeichen und Zubehörartikel wie Kennzeichenhalter per UPS-Express für 14,95 € bis 12:00 Uhr und für 19,95 € bis 9:00 Uhr per DHL-Express zusenden. Der Versand von Feinstaubplaketten erfolgt als Deutsche Post Brief für 1,00 €.
+        </p>
+    </div>
+    <div class="info info-right">
+        <span class="info-description-title">
+            Warum ist eine Bestellmenge von „2“ für Kfz-Kennzeichen voreingestellt?
+        </span>
+        <p>
+            Die Erfahrung und letzten Endes auch die Logik zeigen, dass unsere Kunden generell davon ausgehen, bei einer Bestellung von Kfz-Kennzeichen auch wirklich zwei Nummernschilder - sowohl für Front als auch Heck - zu erhalten. Mit einer voreingestellten Bestellmenge von 2 Kfz-Kennzeichen möchten wir Sie davor bewahren, versehentlich nur ein Kennzeichen zu bestellen und eventuell ein zweites nachbestellen zu müssen. Dadurch sparen Sie sich unnötige Kosten und Zeitaufwände und wir können Ihnen genau das anbieten, wonach Sie suchen.
+        </p>
+        <p>
+            Achtung: Es handelt sich hier nicht um eine Mindestbestellmenge. Selbstverständlich können Sie die Stückzahl auch heruntersetzen, wenn Sie nur ein Kennzeichen benötigen!
+        </p>
+    </div>
+</div>
+
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal',
+            'Ves_All/lib/owl.carousel/owl.carousel.min'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var productInfo = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                modalClass: 'productInfo-modal',
+                buttons: [{
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            $(".productInfo-modal").click(function() {
+
+                $(".productInfo").modal(productInfo).modal('openModal');
+
+            });
+
+            $('.mobile-slide').owlCarousel({
+                loop: true,
+                responsiveClass:true,
+                nav: false,
+                items: 1,
+                dots:true,
+                margin:0,
+                singleItem:true,
+                navClass:['owl-prev','owl-next']
+            });
+        }
+    );
+</script>
+

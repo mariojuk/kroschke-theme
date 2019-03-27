@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 300 300" style="enable-background:new 0 0 300 300;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;}
+	.st1{display:inline;fill:#004A78;}
+	.st2{fill:#FFFFFF;}
+</style>
+<g id="Ebene_3" class="st0">
+	<rect x="-22" y="-9" class="st1" width="332" height="335"/>
+</g>
+<g id="Ebene_1" class="st0">
+	
+		<image style="display:inline;overflow:visible;" width="80" height="80" xlink:href="icon-creditcard.png"  transform="matrix(3.5919 0 0 3.5919 7 6)">
+	</image>
+</g>
+<g id="Ebene_2">
+	<g>
+		<path class="st2" d="M38.1,85.9L263.3,26l-1.9-7.1c-2.4-8.9-11.6-14.2-20.4-11.9L48.1,58.4c-8.9,2.4-14.2,11.6-11.9,20.4
+			L38.1,85.9z"/>
+		<path class="st2" d="M294.7,144.2l-22.4-84.4L83.6,110h137.7c22.4,0,40.7,18.3,40.7,40.7v19.5l20.9-5.5
+			C291.8,162.3,297.1,153.1,294.7,144.2z"/>
+	</g>
+	<path class="st2" d="M225.3,130H25.7C16.5,130,9,137.5,9,146.7v129.6c0,9.2,7.5,16.7,16.7,16.7h199.6c9.2,0,16.7-7.5,16.7-16.7
+		V146.7C242,137.5,234.5,130,225.3,130z M29,163.5c0-5.8,4.7-10.5,10.5-10.5h106c5.8,0,10.5,4.7,10.5,10.5c0,5.8-4.7,10.5-10.5,10.5
+		h-106C33.7,174,29,169.3,29,163.5z M152,275c-17.7,0-32-14.3-32-32c0-17.7,14.3-32,32-32s32,14.3,32,32
+		C184,260.7,169.7,275,152,275z M189,275c-3.5,0-6.9-0.6-10-1.6c12.8-4.2,22-16.2,22-30.4s-9.2-26.2-22-30.4c3.1-1,6.5-1.6,10-1.6
+		c17.7,0,32,14.3,32,32C221,260.7,206.7,275,189,275z"/>
+</g>
+</svg>

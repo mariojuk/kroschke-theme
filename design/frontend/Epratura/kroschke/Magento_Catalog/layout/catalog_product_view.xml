@@ -1,0 +1,55 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <head>
+        <css src="Ves_All::lib/owl.carousel/assets/owl.carousel.css"/>
+    </head>
+
+    <body>
+
+        <!--remove elements-->
+        <referenceBlock name="product.info.review" remove="true"/>
+        <referenceBlock name="reviews.tab" remove="true"/>
+        <referenceBlock name="product.info.social" remove="true"/>
+        <!--<referenceBlock name="product.info.stock.sku" remove="true"/>-->
+        <referenceBlock name="product.info.details" remove="true"/>
+
+        <referenceContainer name="main">
+            <block class="Magento\Cms\Block\Block" name="product.info.payment.options" after="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">product_info_payment_options</argument>
+                </arguments>
+            </block>
+            <block class="Kroschke\Kennzeichen\Block\Product\KennZeichen" name="configurable_licence_input"
+                   template="Magento_Catalog::product/view/licence-input.phtml" after="-"/>
+            <block class="Kroschke\Kennzeichen\Block\Product\KennZeichen" name="configurable_plakette_input"
+                   template="Magento_Catalog::product/view/plakette.phtml" after="-"/>
+            <block class="Magento\Cms\Block\Block" name="mobile.slider" after="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">mobile-slider</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <referenceContainer name="product.info.price">
+            <block class="Magento\Cms\Block\Block" name="product-info-price-detail" before="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">product-info-price-detail</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <!--move elements-->
+        <move element="page.main.title" destination="product.info.main" before="-"/>
+        <move element="productShortDescription" destination="product.info.main" after="page.main.title"/>
+        <move element="product.info.payment.options" destination="product.info.main" after="-"/>
+        <move element="product.info.stock.sku" destination="product.info.main" before="-"/>
+        <move element="product.info.description" destination="content" after="-"/>
+
+
+        <referenceContainer name="product.info.media">
+            <block class="Kroschke\Kennzeichen\Block\Product\KennZeichen" name="product.info.media.image"
+                   template="Magento_Catalog::product/view/gallery.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,40 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<li id="payment" role="presentation" class="checkout-payment-method" data-bind="fadeVisible: isVisible">
+
+    <div id="checkout-step-payment"
+         class="step-content custom-summary"
+         data-role="content"
+         role="tabpanel"
+         aria-hidden="false">
+
+        <div class="custom-summary-main">
+            <h4>Ihre Bestellung</h4>
+
+            <each args="getRegion('review-information')" render=""/>
+            <each args="getRegion('cart-items')" render=""/>
+        </div>
+
+        <div class="custom-summary-sidebar">
+
+            <each args="getRegion('summary')" render=""/>
+
+            <each args="getRegion('checkout-agreements')" render=""/>
+
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button class="action primary checkout"
+                            type="submit"
+                            data-bind="click: placeOrder, attr: {'title': $t('Place Order')},"
+                    >
+                        <span data-bind="i18n: 'Place Order'"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

@@ -1,0 +1,466 @@
+<?php
+/**
+ * @var $block Kroschke\Kennzeichen\Block\Product\KennZeichen
+ */
+$_helper  = $this->helper('Magento\Catalog\Helper\Output');
+$_product = $block->getProduct();
+
+if (!$block->checkAttributeSet($_product->getAttributeSetId())) {
+    return;
+}
+
+$kennzeichen_type      = $_product->getAttributeText('plate_type');
+$number_of_inputs_code = 'number_of_inputs';
+$width_attribute_id    = $block->getWidthAttributeId();
+
+$attributes = [];
+foreach (['plate_color', 'plate_width'] as $code) {
+    $_attributeValue = ($_helper->productAttribute($_product, $_product->getData($code), $code
+    )) ? $_product->getAttributeText($code) : '';
+
+    if ($_attributeValue) {
+        if (!is_array($_attributeValue)) {
+            $_attributeValue = [$_attributeValue];
+        }
+
+        $attribute  = $_product->getResource()->getAttribute($code);
+        $short_code = substr($code, strpos($code, '_') + 1);
+
+        if ($attribute) {
+            $attributes[$short_code] = [
+                'options'   => $_attributeValue,
+                'attribute' => $attribute,
+            ];
+        }
+    }
+}
+//get the field number
+$number_of_inputs = ($_helper->productAttribute($_product, $_product->getData($number_of_inputs_code),
+                                                $number_of_inputs_code
+)) ? $_product->getAttributeText($number_of_inputs_code) : '';
+
+$showdDate = $_product->getData('plate_date');
+?>
+
+<?php if ($number_of_inputs): ?>
+    <div class="product-licence-input" id="license_plate_configurator">
+        <div class="product-licence-input-wrapper">
+            <div class="input-fields">
+                <h4><?php echo __('Ihr Kennzeichen:') ?></h4>
+
+                <form action="#">
+                    <div class="fields">
+                        <img src="<?php echo $block->getViewFileUrl('images/licence_plate_eu.jpg'); ?>" alt="">
+                        <?php if ($number_of_inputs > 1) : ?>
+                            <input
+                                    type="text" autocomplete="off" class="license_input text_input" id="license_input_first"
+                                    data-max="3" maxlength="3" disabled>
+                            <input type="text" autocomplete="off" class="license_input text_input"
+                                   data-max="2" maxlength="2" disabled id="license_input_second">
+                            <input type="number" autocomplete="off" class="license_input number_input"
+                                   data-max="4" maxlength="4" disabled id="license_input_third">
+                        <?php else : ?>
+                            <input type="text" class="license_input standard_input" data-max="9">
+                        <?php endif; ?>
+                    </div>
+                </form>
+
+            </div>
+            <div class="text">
+                <p> <?php echo __('Möchten Sie vorab Ihr Wunschkennzeichen online reservieren?') ?></p>
+                <p><a href="#" id="galangen_link"
+                      target="_blank"> <?php echo __('Hier gelangen Sie direkt zur Wunschkennzeichen-Vorbestellung Ihres Zulassungsamtes.'
+                        ) ?></a>
+                </p>
+            </div>
+            <a class="product-licence-link" href="https://www.kroschke.de/kfz-zulassungsstelle.html" target="_blank">TIPP: Sparen Sie sich den Behördengang - jetzt online zulassen! </a>
+        </div>
+    </div>
+
+    <div class="schrift-licence-input" id="schrift_plate_configurator">
+        <h4><?php echo __('Kennzeichen anpassen:') ?> </h4>
+        <div class="input-fields">
+            <form action="#">
+                <div class="fields">
+                    <?php foreach ($attributes as $code => $array): ?>
+                        <div class="schrift-attribute">
+                            <div class="schrift-attr-name">
+                                <span><?php echo $array['attribute']->getFrontendLabel() ?></span>
+                            </div>
+                            <div class="schrift-select">
+                                <select name="<?php echo $code ?>" id="schrift_<?php echo $code ?>"
+                                        class="schrift_input">
+                                    <?php foreach ($array['options'] as $option): ?>
+                                        <option value="<?php echo $option ?>"><?php echo $option ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <?php if ($code == 'color'): ?>
+                                <div class="schrift-info schrift-info-<?php echo $code ?>">
+                                    <div class="schrift-tooltip" style="display: none;">
+                                        <h4>Schwarze Kennzeichen</h4>
+                                        <p>Die Standard-Schriftfarbe für Kennzeichen</p>
+                                        <h4>Grüne Kennzeichen</h4>
+                                        <p>Eine grüne Schriftfarbe kann für steuerbefreite Fahrzeuge der Land- und
+                                            Forstwirtschaft, gemeinnützige Organisationen und für bestimmte Anhänger und
+                                            Arbeitsmaschinen verwendet werden.</p>
+                                        <h4>Rote Kennzeichen</h4>
+                                        <p>Kennzeichen mit roter Schriftfarbe können nur von Personen mit einem
+                                            Händlernachweis genutzt werden.</p>
+                                    </div>
+                                </div>
+                            <?php elseif ($code == 'width'): ?>
+                                <div class="schrift-info schrift-info-<?php echo $code ?>">
+                                    <div class="schrift-tooltip" style="display: none;">
+                                        <p>Die Länge der Kennzeichen ist von verschiedenen Faktoren abhängig: dem
+                                            Fahrzeugtyp, 1-zeiliges oder 2-zeiliges Kennzeichen und auch von Ihren
+                                            persönlichen Wünschen.
+                                        </p>
+                                        <p>Einzeiliges Kennzeichen</p>
+                                        <p>Zweizeiliges Kennzeichen</p>
+                                        <p>Die Standardlänge für Pkw-Kennzeichen ist 520 mm, für Motorrad-Kennzeichen
+                                            180 mm.</p>
+                                        <p>Kennzeichenlängen 520 und 480 mm sind einzeilig und für Pkw vorgesehen. Die
+                                            Kennzeichenlänge 340 mm ist ein zweizeiliges Pkw-Kennzeichen.</p>
+                                        <p>Die Kennzeichen der Längen 180, 220 und 280 mm sind zweizeilige
+                                            Mottorad-Kennzeichen.</p>
+                                        <p><strong>Achtung: Nicht jede Zulassungsstelle akzeptiert verkürzte
+                                                Nummernschilder.</strong></p>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+
+                    <?php if ($showdDate): ?>
+                        <div class="schrift-attribute">
+                            <div class="schrift-attr-name">
+                                <span><?php echo __('Gültig von') ?></span>
+                            </div>
+                            <div class="schrift-select">
+                                <select name="from_date" id="schrift_from"
+                                        class="schrift_input schrift_input_date">
+                                    <?php foreach ($block->getListOfMonths() as $code => $month): ?>
+                                        <option value="<?php echo $code ?>"><?php echo $month ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="schrift-info schrift-info-from">
+                                <div class="schrift-tooltip" style="display: none;">
+                                    <p>Kfz mit Saisonkennzeichen sind nur für einen Zeitraum zwischen zwei und elf
+                                        Monaten eines beliebigen Zwölf-Monatszeitraums zugelassen. Bitte geben Sie den
+                                        Monat an, ab dem das Kfz zugelassen sein soll, sowie den Monat, nach dem die
+                                        Zulassung automatisch erlischt</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="schrift-attribute">
+                            <div class="schrift-attr-name">
+                                <span><?php echo __('bis') ?></span>
+                            </div>
+                            <div class="schrift-select">
+                                <select name="to_date" id="schrift_to"
+                                        class="schrift_input schrift_input_date">
+                                    <?php foreach ($block->getListOfMonths() as $code => $month): ?>
+                                        <option value="<?php echo $code ?>"><?php echo $month ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="schrift-info schrift-info-from" style="visibility: hidden"></div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        require(['jquery', 'underscore'], function ($, _) {
+            var $configurator = $('#license_plate_configurator'),
+                $gallery = $('[data-gallery-role=gallery-placeholder]'),
+                $error = $('.gallery-holder .plate_error'),
+                $custom_options = $('.product-custom-option.license_plate'),
+                submitUrl = '<?php echo $block->getUrl('kroschke_image/index/generate') ?>',
+                kennzeichen_type = '<?= $kennzeichen_type ?>',
+                number_of_inputs = '<?= $number_of_inputs ?>',
+                width_attribute_id = '<?= $width_attribute_id ?>',
+                fotorama = undefined;
+
+            var width_attr_selector = '#attribute' + width_attribute_id;
+
+            $gallery.on('gallery:loaded', function (e) {
+                $('.license_input, .schrift_input').attr('disabled', false);
+                fotorama = $gallery.data('gallery');
+            });
+
+            $('#product-addtocart-button').attr('disabled', true);
+
+            $("#license_input_second").on('keyup change',function(){
+              checkSecondRow(2);
+            })
+
+            $("#license_input_third").on('keyup change',function(){
+              checkSecondRow(3);
+            })
+
+            //Check second row number of characters
+
+            function checkIfMotorClassExist(){
+              var classes = [
+                ".product-historisches-kennzeichen-fur-motorrader"
+              ]
+
+              var exist = false;
+
+              for(var i=0; i<classes.length; i++){
+                if($(classes[i]) &&  $(classes[i])[0]){
+                  exist = true;
+                }
+              }
+
+              return exist;
+            }
+
+            function checkSecondRow(input){
+              if(checkIfMotorClassExist()){
+                var secondInput = $("#license_input_second").val();
+                var thirdInput = $("#license_input_third").val();
+                var secondLength = secondInput.toString().length;
+                var thirdLength = thirdInput.toString().length;
+
+                if(secondLength + thirdLength > 3){
+                  if(input == 2){
+                    var val = secondInput.slice(0,-1);
+                    $("#license_input_second").val(val);
+                  }
+                  if(input == 3){
+                    var val = thirdInput.slice(0,-1);
+                    $("#license_input_third").val(val);
+                  }
+                }
+              }
+            }
+
+            $('.license_input, .schrift_input').on('keyup change', _.debounce(function (e) {
+                $('#product-addtocart-button').attr('disabled', true);
+
+                var payload = {type: kennzeichen_type};
+                var number_of_texts = 0;
+
+                $('.license_input').each(function (index, input) {
+                    payload['text' + (index + 1)] = input.value;
+
+                    if (input.value) {
+                        number_of_texts++;
+                    }
+                });
+
+                if (!number_of_texts) {
+                    return;
+                }
+
+                $('.schrift_input').each(function (index, input) {
+                    var $input = $(input);
+
+                    payload[$input.attr('name')] = $input.val();
+                });
+
+                $.post({
+                    url: submitUrl,
+                    data: payload,
+                    success: function (response) {
+                        if (response.success) {
+                            showGallery();
+                            updateImage(response.image_data);
+                            updateInputs(response.image_data);
+
+                            if (number_of_texts < number_of_inputs) {
+                                $('#product-addtocart-button').attr('disabled', true);
+                            } else {
+                                $('#product-addtocart-button').attr('disabled', false);
+                            }
+                        } else {
+                            $('#product-addtocart-button').attr('disabled', true);
+                            showError(response.msg);
+                        }
+                    }
+                });
+            }, 400));
+
+            //VALIDATION
+            $('.license_input').keyup(function (e) {
+                var $input = $(this);
+
+                var value = $input.val();
+
+                if (value.length > $input.data('max')) {
+                    this.value = removeLastChar(value);
+                    return;
+                }
+
+                if ($input.hasClass('text_input')) {
+                    if (value.search(/[^a-zA-Z\x7f-\xff]+/) !== -1) {
+                        //remove the last letter
+                        this.value = removeLastChar(value);
+                    }
+                } else if ($input.hasClass('number_input')) {
+                    if (value.search(/[^0-9]+/) !== -1) {
+                        //remove the last letter
+                        this.value = removeLastChar(value);
+                    }
+                }
+
+                function removeLastChar(string) {
+                    return string.substr(0, string.length - 1)
+                }
+            });
+
+            function updateImage(data) {
+                fotorama.updateData([
+                    {
+                        full: data['url'],
+                        img: data['url'],
+                        thumb: data['url'],
+                        type: 'image',
+                        position: 0,
+                        i: 1,
+                        isMain: true
+                    }
+                ]);
+
+            }
+
+            function updateInputs(data) {
+                var width;
+
+                $custom_options.each(function (index, option) {
+                    var $option = $(option),
+                        value = data[$option.data('plate')];
+
+                    if (value) {
+                        $option.val(value);
+                    }
+                });
+
+                width = data['plate_width'];
+                //update configurable value
+                $widthSelect = $(width_attr_selector);
+
+                $widthSelect.find('option').each(function (index, option) {
+                    $option = $(option);
+
+                    if ($option.text() == width) {
+                        $widthSelect.val($option.val());
+                        return false;
+                    }
+                })
+
+            }
+
+            function showGallery() {
+                $gallery.show();
+                $error.hide();
+            }
+
+            function showError(error) {
+                $gallery.hide();
+                $error.html(error).show();
+            }
+        });
+    </script>
+    <?php
+    $gelangenText = __("Bitte geben Sie einen korrekten Zulassungsbezirk im ersten Kennzeichen-Eingabefeld ein.");
+    ?>
+    <script>
+        require(['jquery'], function ($) {
+            var $firstInput = $('#license_input_first'),
+                $link = $('#galangen_link'),
+                gelangenText = "<?= $gelangenText ?>",
+                links =   <?= json_encode($block->getLicenseLinks()) ?>;
+
+            $firstInput.change(function (event) {
+                if (links[$firstInput.val().toUpperCase()] !== undefined) {
+                    $link.attr('href', links[$firstInput.val().toUpperCase()]);
+                } else {
+                    $link.attr('href', '#');
+                }
+            });
+            $link.click(function (event) {
+                if (!$link.attr('href') || $link.attr('href') == '#') {
+                    event.preventDefault();
+                    //show popup
+                    createTooltip(event);
+                }
+            });
+            $(document).click(function (event) {
+                var target = event.target;
+
+                if (!$(target).is('#galangen_link') && !$(target).parents().is('#galangen_link')) {
+                    $('.galangen_link_popup').remove();
+                }
+            });
+
+            function positionTooltip(event) {
+                var tPosX = event.pageX - 200;
+                var tPosY = event.pageY - 100;
+                $('div.galangen_link_popup').css({'position': 'absolute', 'top': tPosY, 'left': tPosX});
+            };
+
+            function createTooltip(event) {
+                $('<div class="galangen_link_popup" style="background:#e9e9e9; padding: 20px;">' + gelangenText + '</div>').appendTo('body');
+                positionTooltip(event);
+            };
+        });
+    </script>
+    <script>
+        require([
+                'jquery',
+                'Magento_Ui/js/modal/modal'
+            ],
+            function ($,
+                      modal) {
+                var tooltip = {
+                    type: 'popup',
+                    responsive: true,
+                    innerScroll: true,
+                    modalClass: 'tooltip-modal',
+                    buttons: [{
+                        click: function () {
+                            this.closeModal();
+                        }
+                    }]
+                };
+
+                $(".schrift-info").each(function (index, el) {
+                    var $info = $(el);
+
+                    var $modal = $info.find('.schrift-tooltip').modal(tooltip);
+
+                    $info.click(function () {
+                        $modal.modal('openModal');
+                    });
+                });
+            }
+        );
+    </script>
+    <script>
+        require([
+            'jquery',
+        ], function ($) {
+            var oldurl = $('a.product-licence-link').attr('href');
+            if( $('.category-motorradkennzeichen-v').length || $('.product-motorradkennzeichen').length ){
+                $("a.product-licence-link").attr("href", "https://www.kroschke.de/kfz-zulassungsstelle/motorrad-zulassen.html");
+                var oldurl = $('a.product-licence-link').attr('href');
+            }
+            $("#license_input_first").bind("keyup change", function(e) {
+                var val = $('#license_input_first').val().toUpperCase();
+                if(val.length  > 0 && val.length <= 3) {
+                    $('a.product-licence-link').attr('href', oldurl + '?region=' + val);
+                } else {
+                    $('a.product-licence-link').attr('href', oldurl);
+                } 
+            });
+        });
+    </script>
+<?php endif; ?>

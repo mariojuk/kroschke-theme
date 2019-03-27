@@ -1,0 +1,34 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div id="checkout-shipping-method-load">
+    <div class="checkout-shipping-description">
+        <h4>VERSANDART WÄHLEN</h4>
+        <p>Die Zustellung als Paket (oder Briefversand) erfolgt überwiegend am nächsten Werktag nach der Produktion, spätestens aber in drei Werktagen. Bei den Versandarten Express und Overnight müssen die Bestellungen bis 15:00 Uhr eingehen (freitags bis 14:00 Uhr), damit diese noch am selben Tag versendet werden können. Die Lieferung unserer Artikel kann nur nach Deutschland erfolgen.</p>
+    </div>
+    <table class="table-checkout-shipping-method">
+        <!--<thead>-->
+        <!--<tr class="row">-->
+            <!--<th class="col col-method" translate="'Select Method'"></th>-->
+            <!--<th class="col col-carrier with-img" translate="'Carrier Title'"></th>-->
+            <!--<th class="col col-custom" translate="'Custom'"></th>-->
+            <!--<th class="col col-price" translate="'Price'"></th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <tbody>
+        <!-- ko foreach: { data: rates(), as: 'method'} -->
+        <!--ko template: { name: element.shippingMethodItemTemplate} --><!-- /ko -->
+        <!-- /ko -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    require(["jquery", "domReady!"], function(){
+        jQuery( window ).load(function() {
+            jQuery('.checkout-shipping-method .row').last().find('.radio').prop('checked', true);
+        });    });
+</script>

@@ -1,0 +1,30 @@
+//
+// Common
+// ___________________________________
+& when (@media-common = true) {
+
+    #ts_product_widget {
+        margin: 20px 0;
+    }
+}
+
+//
+// Mobile
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+    .ts-rating-light.productreviews {
+        .flex-order(2);
+        width: 100%
+    }
+}
+
+//
+// Tablet / Desktop
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {}
+
+//
+// Desktop
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {}

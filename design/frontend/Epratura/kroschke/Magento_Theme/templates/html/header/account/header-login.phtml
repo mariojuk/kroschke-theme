@@ -1,0 +1,37 @@
+<?php
+/**
+ * @var $block
+ */
+?>
+<div class="dropdown-login" style="display:none;">
+    <form class="form form-login"
+          action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>"
+          method="post"
+          id="login-form-header"
+          data-mage-init='{"validation":{}}'>
+        <?= $block->getBlockHtml('formkey') ?>
+        <fieldset class="fieldset login" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+            <div class="field email required">
+                <label class="label" for="email-header"><span><?= $block->escapeHtml(__('E-Mail Adresse')) ?></span></label>
+                <div class="control">
+                    <input name="login[username]" value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>" id="email-header" type="email" class="input-text" title="<?= $block->escapeHtmlAttr(__('Email')) ?>" data-validate="{required:true, 'validate-email':true}">
+                </div>
+            </div>
+            <div class="field password required">
+                <label for="pass" class="label"><span><?= $block->escapeHtml(__('Passwort')) ?></span></label>
+                <div class="control login-div">
+                    <input name="login[password]" type="password" class="input-text" id="pass" title="<?= $block->escapeHtmlAttr(__('Password')) ?>" data-validate="{required:true}">
+                    <button id="show-password" onclick="if (pass.type == 'text') pass.type = 'password';
+  else pass.type = 'text';" type="button">zeigen</button>
+                </div>
+            </div>
+            <?= $block->getChildHtml('form_additional_info') ?>
+            <div class="actions-toolbar">
+                <a class="action remind" href="<?= $block->escapeUrl($block->getBaseUrl()) ?>customer/account/forgotpassword/"><span><?= $block->escapeHtml(__('Passwort vergessen?')) ?></span></a>
+                <div class="primary"><button type="submit" class="action login primary" name="send" id="send"><span><?php /* @escapeNotVerified */ echo __('anmelden') ?></span></button>
+                    <a class="action primary register" href="<?= $block->escapeUrl($block->getBaseUrl()) ?>customer/account/login">jetzt registrieren</a>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

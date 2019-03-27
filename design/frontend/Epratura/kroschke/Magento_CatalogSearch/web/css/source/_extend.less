@@ -1,0 +1,101 @@
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .block-search {
+        box-sizing: border-box;
+
+        input {
+            font-family: 'futura lite', 'Open Sans', sans-serif;
+            height: 50px;
+            margin: 0;
+            padding-right: 50px;
+            position: static;
+        }
+
+        .actions {
+            .action.search {
+                padding: 10px;
+
+                &:before {
+                    width: 30px;
+                    height: 30px;
+                    content: '';
+                    background: url("../../web/images/search.svg") no-repeat center/18px;
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__xl) {
+    .block-search {
+        margin-left: 5%;
+        width: 38.3%;
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .block-search {
+        .actions {
+            position: relative;
+            .action.search {
+                display: none;
+            }
+        }
+        .label:before {
+            width: 50px;
+            height: 50px;
+            content: '';
+            background: #37afb9 url("../../web/images/search.svg") no-repeat center/18px;
+        }
+        .minisearch.active {
+            .action.search {
+                position: absolute;
+                padding: 0.4rem 0;
+                display: inline-block;
+                right: 16px;
+                top: 16px;
+                font-size: 0;
+                width: 30px;
+                height: 30px;
+                background: @blue__main;
+                opacity: 1;
+                &:before {
+                    display: block;
+                    width: 30px;
+                    height: 20px;
+                    content: '';
+                    background: url("../../web/images/search.svg") no-repeat center/12px;
+                }
+            }
+        }
+    }
+}
+
+//
+// Tablet
+// _
+.media-width(@minBreak, @maxBreak) when (@minBreak = @screen__m) and (@maxBreak = @screen__l) {
+    .block-search {
+
+        input {
+            height: 30px;
+            padding-right: 0px;
+        }
+
+        .actions {
+            .action.search {
+                padding: 0.4rem 0;
+                &:before {
+                    width: 30px;
+                    height: 20px;
+                    content: '';
+                    background: url("../../web/images/search.svg") no-repeat center/12px;
+                }
+            }
+        }
+    }
+
+}

@@ -1,0 +1,113 @@
+//
+// Common
+// ___________________________________
+& when (@media-common = true) {
+    .page-main {
+
+        .versand-wrapper {
+            .lib-vendor-prefix-display(flex);
+            width: 100%;
+
+            .versand-description {
+                 width: 100%;
+
+                .versand-description-txt {
+                    
+                    .versand-description-txt-title {
+                        width: 100%;
+                        margin-bottom: 30px;
+                    }
+
+                    a{
+                        font-family: @font-family__futura__med, 'Open Sans', sans-serif;
+                        color: @lightblue2;
+                        text-decoration: underline;
+                    }
+                }
+            }
+            
+            .versand-description-txt-two {
+
+                .versand-description-txt-title {
+                    width: 100%;
+                    height: 22px;
+                    margin-bottom: 30px;
+                }
+            }
+        }
+    }
+}
+
+//
+// Mobile
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) { // max 767 px
+    .page-main {
+        .versand-wrapper {
+
+            .versand-description {
+
+                .versand-description-txt {
+                    width: 100%;
+                    .versand-description-txt-title {
+                        height: 40px;
+                    }
+                }
+
+                .versand-description-txt-two {
+                    width: 100%;
+                    margin-top:20px;
+                }
+            }
+        }
+    }
+}
+
+//
+// Desktop
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .page-main {
+        .versand-wrapper {
+
+            .versand-description {
+
+                .versand-description-txt {
+                    width: 48%;
+                    float: left;
+                    display: inline-block;
+                }
+
+                .versand-description-txt-two {
+                    width: 48%;
+                    display: inline-block;
+                    .versand-description-txt-title {
+                        height: 22px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+// Tablet
+// ___________________________________
+.media-width(@minBreak, @maxBreak) when (@minBreak = @screen__m) and (@maxBreak = @screen__l) {
+    .page-main {
+        .versand-wrapper {
+            .kroschke-title-text{
+                margin-left:10px;
+                width:90%;
+            }
+            .kroschke-main-line{
+                margin-left:10px;
+            }
+            .versand-description {
+                width: 98%;
+                .lib-vendor-prefix-display(flex);
+                .flex-space-around() ;
+            }
+        }
+    }
+}

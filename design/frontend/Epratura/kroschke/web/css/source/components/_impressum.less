@@ -1,0 +1,56 @@
+//
+// Common
+// ___________________________________
+& when (@media-common = true) {
+    .page-main {
+
+        .kroschke-main-line{
+            border-bottom: solid 3px #004b78;
+            margin: 0 0 30px 0;
+            line-height: 30px;
+        }
+    }
+}
+
+//
+// Mobile
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) { // max 767 px
+    .page-main {
+        .impres-container {
+            .column-count(1);
+            .column-gap(50px);
+        }
+    }
+}
+
+//
+// Desktop
+// ___________________________________
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .page-main {
+        .impres-container {
+            .column-count(2);
+            .column-gap(50px);
+        }
+    }
+}
+
+//
+// Tablet
+// ___________________________________
+.media-width(@minBreak, @maxBreak) when (@minBreak = @screen__m) and (@maxBreak = @screen__l) {
+    .page-main {
+        .impres-wrapper{
+            .kroschke-title-text{
+                width:90%;
+            }
+            .impres-container {
+                .column-count(2);
+                .column-gap(50px);
+                margin:0 10px;
+            }
+        }
+    }
+}
+
